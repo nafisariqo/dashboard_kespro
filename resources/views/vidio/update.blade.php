@@ -22,7 +22,7 @@
                     <div class="mb-3">
                       <label for="gambar" class="form-label">Gambar</label>
                       <input type="hidden" name="gambar_lama" value="{{ $item->gambar }}">
-                      <img src="{{ asset('gmbrVideo/' . $item->gambar) }}" id="output" class="img-preview img-fluid mb-3 col-sm-5 d-block">
+                      <img src="{{ url($item->gambar) }}" id="output" class="img-preview img-fluid mb-3 col-sm-5 d-block">
                       <input class="form-control @error('gambar') is-invalid @enderror" type="file" id="gambar" name="gambar" value="{{$item->gambar}}" onchange="previewImage(event)">
                       @error('gambar')
                         <div class="alert alert-danger">{{ $message }}</div>
@@ -37,6 +37,10 @@
                     </div>
                     <div class="form-group">
                         <label for="vidio" class="form-control-label">Video</label>
+                        <video width="320" controls>
+                            <source src="{{ url($item->video) }}" type="video/mp4">
+                            Your browser does not support the video tag.                        
+                        </video>
                         <input class="form-control @error('vidio') is-invalid @enderror" name="vidio" type="file" value="{{ $item->video}}" required>
                         @error('vidio')
                           <div class="alert alert-danger">{{ $message }}</div>
