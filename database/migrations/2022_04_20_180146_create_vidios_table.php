@@ -15,10 +15,11 @@ class CreateVidiosTable extends Migration
     {
         Schema::create('vidios', function (Blueprint $table) {
             $table->id();
-            // $table->string('gambar');
+            $table->string('gambar');
             $table->string('title');
             $table->string('video');
-            // $table->string('penjelasan');
+            $table->string('proofby');
+            $table->longText('penjelasan');
             $table->timestamps(); 
         });
     }

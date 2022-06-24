@@ -67,8 +67,10 @@ Route::middleware([AuthMiddleware::class])->group(function(){
     //vidio
     Route::get('vidio', [VidioController::class, 'index'])->name('vidio-index');
     Route::get('vidio/create', [VidioController::class, 'create'])->name('vidio-create');
-    Route::get('vidio/update', [VidioController::class, 'update'])->name('vidio-update');
+    Route::get('vidio/update/{id}', [VidioController::class, 'update'])->name('vidio-update');
+    Route::post('vidio/edit/{id}', [VidioController::class, 'edit'])->name('vidio.edit');
     Route::post('vidio/store', [VidioController::class, 'store'])->name('vidio-store');
+    Route::get('vidio/show/{id}', [VidioController::class, 'show'])->name('penjelasan-show');
     Route::get('vidio/delete/{id}', [VidioController::class, 'delete']);
 
     //webinar

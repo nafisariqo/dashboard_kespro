@@ -28,31 +28,34 @@
       <table id="example" class="table table-striped" style="width:100%">
           <thead>
               <tr>
-                  {{-- <th>Gambar</th> --}}
+                  <th>Gambar</th>
                   <th>Judul</th>
-                  <th>Publish at</th>
                   <th>Video</th>
-                  {{-- <th>Penjelasan</th> --}}
+                  <th>Publish at</th>
+                  <th>Proof By</th>
+                  <th>Penjelasan</th>
                   <th>Action</th>
               </tr>
           </thead>
           <tbody>
             @foreach ($vidio as $item)
             <tr>
-              {{-- <td></td> --}}
-              <td>{{ $item->title }}</td>
-              <td>{{ $item->created_at->format('D, d M Y') }}</td>
-              {{-- <td>{{ $item->video }}</td> --}}
               <td>
-                <video width="320" height="240" controls="controls" preload="metadata">
-                    <source src="{{ asset('Video/'.$item->video) }}" type="video/mp4">
-                </video>
+                <img src="{{ asset('gmbrVideo/'.$item->gambar) }}" style="width: 70px;">
               </td>
-              {{-- <td></td> --}}
+              <td>{{ $item->title }}</td>
+              <td>{{ $item->video }}</td>
+              <td>{{ $item->created_at->format('D, d M Y') }}</td>
+              <td>{{ $item->proofby}}</td>
+              <td>
+                <div class="ms-auto">
+                    <a class="btn btn-link text-info px-3 mb-0" href="{{ route('penjelasan-show', $item->id) }}">Show More</a>
+                </div>
+              </td>
               <td>
                   <div class="ms-auto text-end">
                       <a class="btn btn-link text-danger text-gradient px-3 mb-0 delete" vid-id="{{ $item->id }}" href="#" ><i class="far fa-trash-alt me-2"></i>Delete</a>
-                      <a class="btn btn-link text-dark px-3 mb-0" href="{{ route('vidio-update') }}"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                      <a class="btn btn-link text-dark px-3 mb-0" href="{{ route('vidio-update', $item->id) }}"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
                   </div>
               </td>
             </tr>  

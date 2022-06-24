@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vidio;
-use Illuminate\Support\Facades\DB;
 use Storage;
+use DB;
 use Illuminate\Http\Request;
 
 class VidioController extends Controller
@@ -20,10 +20,18 @@ class VidioController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
+            'gambar' => 'required|image|mimes:jpg,png,jpeg,svg|max:3072',
             'title' => 'string|max:255',
             'video' => 'required|file|mimetypes:video/mp4',
+            'proofby' => 'string|max:100',
+            'penjelasan' => 'string|min:10',
         ]);
         $vidio = new Vidio;
+        if($request->hasFile('gambar')){
+            $path = $request->file('gambar')->move('gmbrVideo/', $request->file('gambar')->getClientOriginalName());
+            $path->gambar = $request->file('gambar')->getClientOriginalName();
+            $vidio->gambar = $path;
+        }
         $vidio->title = $request->title;
         if ($request->hasFile('video'))
         {
@@ -32,13 +40,15 @@ class VidioController extends Controller
             $path->video = $request->file('video')->getClientOriginalName();
             $vidio->video = $path;
         }
+        $vidio->proofby = $request->proofby;
+        $vidio->penjelasan = $request->penjelasan;
         $vidio->save();
 
         if ($vidio) {
             return redirect()
                 ->route('vidio-index')
                 ->with([
-                    'success' => 'New video has been added successfully'
+                    'success' => 'New video learning has been added successfully'
                 ]);
         } else {
             return redirect()
@@ -51,8 +61,60 @@ class VidioController extends Controller
    
     }
 
-    public function update(){
-        return view('vidio.update');
+    public function update($id){
+        $vidio = DB::table('vidios')->where('id',$id)->get();
+        return view('vidio.update', compact('vidio'));
+    }
+
+    public function show($id){
+        $post = DB::table('vidios')->where('id',$id)->first();
+        return view('vidio.more',  ['post'=>$post]);
+    }
+
+    public function edit($id, Request $request){
+        $ubah = Vidio::find($id);
+        $awal = $ubah->gambar;
+
+        if (isset($request->gambar)) {
+            # code...
+            $this->validate($request, [
+                'gambar' =>'required|image|mimes:jpg,png,jpeg,svg|max:3072',
+                'title' => 'string|max:255',
+                'video' => 'required|file|mimetypes:video/mp4',
+                'proofby' => 'string|max:100',
+                'penjelasan' => 'string|min:10'
+            ]);
+    
+            $vidio = [
+                'gambar' => $awal,
+                'title' => $request->title,
+                'video' => $request->video,
+                'proofby' => $request->proofby,
+                'penjelasan' => $request->penjelasan,
+            ];
+            $request->gambar->move('gmbrVideo/', $awal);
+            
+            $ubah->update($vidio);
+            return redirect()->route('vidio-index')->with('success', 'Edit Data Success!');
+        } else {
+            $this->validate($request, [
+                'judul' => 'required|min:7|max:50',
+                'video' => 'required|file|mimetypes:video/mp4',
+                'proofby' => 'string|max:100',
+                'penjelasan' => 'string|min:10'
+            ]);
+    
+            $vidio = [
+                'gambar' => $request->gambar_lama,
+                'title' => $request->title,
+                'video' => $request->video,
+                'proofby' => $request->proofby,
+                'penjelasan' => $request->penjelasan,
+            ];
+            
+            $ubah->update($vidio);
+            return redirect()->route('vidio-index')->with('success', 'Edit Data Success!');
+        }
     }
 
     public function delete($id)

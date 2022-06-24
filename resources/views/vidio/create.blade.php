@@ -18,13 +18,16 @@
             <div class="p-4 bg-light">
                 <form action="{{ route('vidio-store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <label for="gambar" class="form-control-label">Gambar</label>
-                        <input class="form-control" name="gambar" type="file" required>
-                    </div> --}}
+                        <input class="form-control @error('gambar') is-invalid @enderror" name="gambar" type="file" autofocus required>
+                        @error('gambar')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="form-group">
                         <label for="title" class="form-control-label">Judul</label>
-                        <input class="form-control  @error('title') is-invalid @enderror" name="title" type="text" value="{{ old('title') }}" required autofocus>
+                        <input class="form-control  @error('title') is-invalid @enderror" name="title" type="text" value="{{ old('title') }}" required>
                         @error('title')
                           <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -36,10 +39,17 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                       @enderror
                     </div>
-                    {{-- <div class="form-group">
-                        <label for="penjelasan">Penjelasan</label>
-                        <textarea class="form-control" id="penjelasan" name="penjelasan" rows="10" required></textarea>
-                    </div> --}}
+                    <div class="form-group">
+                      <label for="proofby" class="form-control-label">Proof By</label>
+                      <input class="form-control  @error('proofby') is-invalid @enderror" name="proofby" type="text" value="{{ old('proofby') }}" required>
+                      @error('proofby')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                      @enderror
+                    </div>
+                    <div class="form-group">
+                      <label for="penjelasan">Penjelasan</label>
+                      <textarea id="penjelasan" name="penjelasan" value="{{ old('penjelasan') }}"></textarea>
+                    </div>
                     <a class="btn bg-gradient-warning mt-4 mb-4" href="{{ route('vidio-index') }}">Cancel</a>
                     <button type="submit" class="btn btn-secondary mt-4 mb-4">Create</button>
                 </form>

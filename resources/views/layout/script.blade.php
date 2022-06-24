@@ -33,14 +33,23 @@
 };
 </script>
 
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script> --}}
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <script>
   $(document).ready(function(){
-    $('#summernote').summernote({
-      placeholder: 'Isi Body Article Here..',
-      height: '200'
+    $('#penjelasan').summernote({
+      placeholder: 'Enter Description Here..',
+      height: '200',
+      toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear', 'italic']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['fontsize', ['fontsize']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+        ]
     });
   });
 </script>

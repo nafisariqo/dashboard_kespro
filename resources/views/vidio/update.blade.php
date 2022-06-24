@@ -16,26 +16,46 @@
               <h6>Edit Article</h6>
             </div>
             <div class="p-4 bg-gradient-secondary">
-                <form action="" method="post">
-                    {{-- @csrf --}}
+                <form action="{{ route('vidio.edit', $vidio[0]->id) }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    @foreach ($vidio as $item) 
+                    <div class="mb-3">
+                      <label for="gambar" class="form-label">Gambar</label>
+                      <input type="hidden" name="gambar_lama" value="{{ $item->gambar }}">
+                      <img src="{{ asset('gmbrVideo/' . $item->gambar) }}" id="output" class="img-preview img-fluid mb-3 col-sm-5 d-block">
+                      <input class="form-control @error('gambar') is-invalid @enderror" type="file" id="gambar" name="gambar" value="{{$item->gambar}}" onchange="previewImage(event)">
+                      @error('gambar')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                      @enderror
+                    </div>
                     <div class="form-group">
-                      <label for="gambar" class="form-control-label">Gambar</label>
-                      <input class="form-control" name="gambar" type="file" required>
-                  </div>
-                  <div class="form-group">
-                      <label for="judul" class="form-control-label">Judul</label>
-                      <input class="form-control" name="judul" type="text" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="vidio" class="form-control-label">Video</label>
-                    <input class="form-control" name="vidio" type="file" required>
-                  </div>
-                  <div class="form-group">
-                      <label for="penjelasan">Penjelasan</label>
-                      <textarea class="form-control" id="penjelasan" name="penjelasan" rows="10" required></textarea>
-                  </div>
+                        <label for="title" class="form-control-label">Judul</label>
+                        <input class="form-control @error('title') is-invalid @enderror" name="title" type="text" value="{{ old('title', $item->title) }}" required>
+                        @error('title')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="vidio" class="form-control-label">Video</label>
+                        <input class="form-control @error('vidio') is-invalid @enderror" name="vidio" type="file" value="{{ $item->video}}" required>
+                        @error('vidio')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="proofby" class="form-control-label">Proof By</label>
+                        <input class="form-control @error('title') is-invalid @enderror" name="proofby" type="text" value="{{ old('proofby', $item->proofby) }}" required>
+                        @error('proofby')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="penjelasan">Penjelasan</label>
+                        <textarea class="form-control" id="penjelasan" name="penjelasan" value="{{ $item->penjelasan}}" required></textarea>
+                    </div>
                       <a class="btn bg-gradient-warning mt-4 mb-4" href="{{ route('vidio-index') }}">Cancel</a>
                       <button class="btn bg-gradient-secondary mt-4 mb-4" type="submit">Save Changes</button>
+                    @endforeach
                 </form>
             </div>
           </div>
