@@ -41,10 +41,15 @@
             @foreach ($vidio as $item)
             <tr>
               <td>
-                <img src="{{ asset('gmbrVideo/'.$item->gambar) }}" style="width: 70px;">
+                <img src="{{ $item->gambar }}" style="width: 70px;">
               </td>
               <td>{{ $item->title }}</td>
-              <td>{{ $item->video }}</td>
+              <td>
+                <video width="320" controls>
+                    <source src="{{ $item->video }}" type="video/mp4">
+                    Your browser does not support the video tag.                        
+                </video>
+              </td>
               <td>{{ $item->created_at->format('D, d M Y') }}</td>
               <td>{{ $item->proofby}}</td>
               <td>
