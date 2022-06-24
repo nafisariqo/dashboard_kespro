@@ -55,7 +55,7 @@
                     </div>
                     <div class="form-group">
                         <label for="penjelasan">Penjelasan</label>
-                        <textarea class="form-control" id="penjelasan" name="penjelasan" value="{{ $item->penjelasan}}" required></textarea>
+                        <textarea class="form-control" id="penjelasan" name="penjelasan" required>{{$item->penjelasan}}</textarea>
                     </div>
                       <a class="btn bg-gradient-warning mt-4 mb-4" href="{{ route('vidio-index') }}">Cancel</a>
                       <button class="btn bg-gradient-secondary mt-4 mb-4" type="submit">Save Changes</button>
